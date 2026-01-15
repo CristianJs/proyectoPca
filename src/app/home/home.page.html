@@ -7,14 +7,15 @@
 </ion-header>
 
 <ion-content [fullscreen]="true">
-  <ion-header collapse="condense">
-    <ion-toolbar>
-      <ion-title size="large">Blank</ion-title>
-    </ion-toolbar>
-  </ion-header>
-
-  <div id="container">
-    <strong>Ready to create an app?</strong>
-    <p>Start with Ionic <a target="_blank" rel="noopener noreferrer" href="https://ionicframework.com/docs/components">UI Components</a></p>
-  </div>
+  <swiper-container pagination="true" loop="true" slides-per-view="1">
+    @for(slide of slides; track $index){
+      <swiper-slide>
+        <div class="slide">
+          <h2>{{ slide.titulo }}</h2>
+          <img [src]="slide.imagen" [alt]="slide.titulo" />
+          <p>{{ slide.descripcion }}</p>
+        </div>
+      </swiper-slide>
+    }
+  </swiper-container>
 </ion-content>
