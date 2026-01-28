@@ -1,2 +1,42 @@
 // For information on how to create your own theme, please refer to:
 // https://ionicframework.com/docs/theming/
+
+
+:root{
+  --tema-oscuro-text: #000000;
+  --tema-oscuro-titulo: #002864;
+  --tema-oscuro-fondo:#d5d9ff;
+  --tema-oscuro-padding : 10px;
+  --tema-oscuro-text-align : center;
+
+  --tema-claro-text: #000000;
+  --tema-claro-titulo: #001636;
+  --tema-claro-fondo:#ffffff;
+  --tema-claro-padding : 15px;
+  --tema-claro-text-align : right;
+}
+
+
+.card-oscuro{
+  background: var(--tema-oscuro-fondo);
+  color: var(--tema-oscuro-text);
+  padding: var(--tema-oscuro-padding);
+
+  h2{
+    color: var(--tema-oscuro-titulo);
+    text-align: var(--tema-oscuro-text-align);
+  }
+}
+
+
+.card-claro{
+  background: var(--tema-oscuro-fondo);
+  color: var(--tema-oscuro-text);
+  padding: var(--tema-oscuro-padding);
+
+  h2{
+    color: var(--tema-oscuro-titulo);
+    text-align: var(--tema-oscuro-text-align);
+  }
+}
+

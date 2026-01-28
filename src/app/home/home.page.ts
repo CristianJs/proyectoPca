@@ -10,6 +10,10 @@ import { IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/angular/stan
 })
 export class HomePage {
 
+  public colorClaro = ''
+  public colorOscuro = 'card-oscuro'
+  public theme = this.colorOscuro;
+
   slides : any = [
     {
       "id": 1,
@@ -31,4 +35,10 @@ export class HomePage {
     }
   ]
   constructor() {}
+
+  cambiarTema(){
+    this.theme  = this.theme == this.colorClaro ? this.colorOscuro : this.colorClaro;
+  }
+
+
 }

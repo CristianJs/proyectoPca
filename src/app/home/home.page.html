@@ -9,7 +9,7 @@
 <ion-content [fullscreen]="true">
   <swiper-container pagination="true" loop="true" slides-per-view="1">
     @for(slide of slides; track $index){
-      <swiper-slide>
+      <swiper-slide [class]="theme">
         <div class="slide">
           <h2>{{ slide.titulo }}</h2>
           <img [src]="slide.imagen" [alt]="slide.titulo" />
@@ -18,4 +18,10 @@
       </swiper-slide>
     }
   </swiper-container>
+
+  <ion-card class="card">
+    <ion-button (click)="cambiarTema()">
+      Cambiar tema
+    </ion-button>
+  </ion-card>
 </ion-content>
