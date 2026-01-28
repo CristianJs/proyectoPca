@@ -1,9 +1,11 @@
 import { Routes } from '@angular/router';
+import { introGuard } from './core/guards/intro-guard';
 
 export const routes: Routes = [
   {
     path: 'home',
     loadComponent: () => import('./home/home.page').then((m) => m.HomePage),
+    canActivate:[introGuard]
   },
   {
     path: '',
@@ -12,6 +14,7 @@ export const routes: Routes = [
   },
   {
     path: 'intro',
-    loadComponent: () => import('./intro/intro.page').then( m => m.IntroPage)
+    loadComponent: () => import('./intro/intro.page').then( m => m.IntroPage),
+    canActivate:[introGuard]
   },
 ];
