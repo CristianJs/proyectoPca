@@ -1,5 +1,6 @@
-import { Component, CUSTOM_ELEMENTS_SCHEMA } from '@angular/core';
+import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
 import { IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/angular/standalone';
+import { StorageService } from '../core/services/storage.service';
 
 @Component({
   selector: 'app-home',
@@ -8,11 +9,11 @@ import { IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/angular/stan
   imports: [IonHeader, IonToolbar, IonTitle, IonContent],
   schemas:[CUSTOM_ELEMENTS_SCHEMA]
 })
-export class HomePage {
+export class HomePage implements OnInit{
 
-  public colorClaro = ''
+  public colorClaro = 'card-claro'
   public colorOscuro = 'card-oscuro'
-  public theme = this.colorOscuro;
+  public theme = '';
 
   slides : any = [
     {
@@ -34,10 +35,20 @@ export class HomePage {
       "descripcion": "Nuestro equipo está siempre disponible para brindarte soporte y acompañarte en cada paso."
     }
   ]
-  constructor() {}
+  constructor(private readonly _storageService: StorageService) {
+  }
 
-  cambiarTema(){
-    this.theme  = this.theme == this.colorClaro ? this.colorOscuro : this.colorClaro;
+  ngOnInit(): void{
+    this.getCurrentTheme();
+  }
+
+  async setTheme(){
+    this.theme = this.theme == this.colorOscuro ? this.colorClaro : this.colorOscuro;
+    await this._storageService.set('theme', this.theme);
+  }
+
+  async getCurrentTheme(){
+    this.theme = await this._storageService.get('theme') ;
   }
 
 
