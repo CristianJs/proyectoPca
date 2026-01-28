@@ -25,4 +25,19 @@
       Cambiar tema
     </ion-button>
   </ion-card>
+    <ion-card class="card">
+    <ion-button (click)="goToIntro()">
+      Volver a ver la intro
+    </ion-button>
+  </ion-card>
+  @if(intro){
+    <ion-text color="primary" >
+      <h1>Ya vio la intro</h1>
+    </ion-text>
+  }@else{
+    <ion-text color="primary" >
+      <h1>No ha visto la intro</h1>
+    </ion-text>
+  }
+
 </ion-content>

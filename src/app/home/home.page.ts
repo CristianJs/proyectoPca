@@ -1,6 +1,7 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
 import { IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/angular/standalone';
 import { StorageService } from '../core/services/storage.service';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-home',
@@ -14,6 +15,7 @@ export class HomePage implements OnInit{
   public colorClaro = 'card-claro'
   public colorOscuro = 'card-oscuro'
   public theme = '';
+  public intro : boolean = false;
 
   slides : any = [
     {
@@ -35,7 +37,14 @@ export class HomePage implements OnInit{
       "descripcion": "Nuestro equipo está siempre disponible para brindarte soporte y acompañarte en cada paso."
     }
   ]
-  constructor(private readonly _storageService: StorageService) {
+  constructor(
+    private readonly _storageService: StorageService,
+    private readonly _router: Router,
+  ) {
+  }
+
+  ionViewWillEnter(){
+    this.getIntro();
   }
 
   ngOnInit(): void{
@@ -51,5 +60,13 @@ export class HomePage implements OnInit{
     this.theme = await this._storageService.get('theme') ;
   }
 
+  public async goToIntro(){
+    this._router.navigateByUrl('/intro');
+    await this._storageService.remove('intro') ;
+  }
+
+  public async getIntro(){
+    this.intro = await this._storageService.get('intro') ;
+  }
 
 }
