@@ -7,7 +7,6 @@ export const introGuard: CanActivateFn = async (route, state) => {
   const router = inject(Router);
   const intro = await storageService.get('intro') ;
   const url = state.url;
-  console.log(state.url)
   if(url == '/intro'){
     return intro ? router.parseUrl('/home') : true;
   }else{

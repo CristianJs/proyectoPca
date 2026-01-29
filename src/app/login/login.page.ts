@@ -60,7 +60,6 @@ export class LoginPage {
   async loginUser(dataLogin: any) {
     try {
       const loginMssg = await this._authService.login(dataLogin);
-      this.storage.set("isLogin", true);
       this._navCtrl.navigateForward("/home");
       this.presentAlert("Bienvenido",loginMssg);
     } catch (error: any) {
