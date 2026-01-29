@@ -21,7 +21,7 @@ export class StorageService {
     }
   }
 
-  public async set(key: string, value: string){
+  public async set(key: string, value: string | boolean){
     await this.ready();
     return this.storage?.set(key, value);
   }
