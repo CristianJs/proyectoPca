@@ -1,13 +1,14 @@
 import { Component, CUSTOM_ELEMENTS_SCHEMA, OnInit } from '@angular/core';
-import { IonHeader, IonToolbar, IonTitle, IonContent } from '@ionic/angular/standalone';
+import { IonHeader, IonToolbar, IonTitle, IonContent, IonMenu, IonItem,IonList } from '@ionic/angular/standalone';
 import { StorageService } from '../core/services/storage.service';
 import { Router } from '@angular/router';
+import { AuthService } from '../core/services/auth.service';
 
 @Component({
   selector: 'app-home',
   templateUrl: 'home.page.html',
   styleUrls: ['home.page.scss'],
-  imports: [IonHeader, IonToolbar, IonTitle, IonContent],
+  imports: [IonHeader, IonToolbar, IonTitle, IonContent,IonMenu,IonList,IonItem],
   schemas:[CUSTOM_ELEMENTS_SCHEMA]
 })
 export class HomePage implements OnInit{
@@ -40,6 +41,7 @@ export class HomePage implements OnInit{
   constructor(
     private readonly _storageService: StorageService,
     private readonly _router: Router,
+    private readonly _auth: AuthService,
   ) {
   }
 
@@ -61,12 +63,18 @@ export class HomePage implements OnInit{
   }
 
   public async goToIntro(){
-    this._router.navigateByUrl('/intro');
     await this._storageService.remove('intro') ;
+    this._router.navigateByUrl('/intro');
   }
 
   public async getIntro(){
     this.intro = await this._storageService.get('intro') ;
   }
+
+  public logout(){
+    this._auth.logout();
+    this._router.navigateByUrl('/login');
+  }
+
 
 }

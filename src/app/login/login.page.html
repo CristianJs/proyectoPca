@@ -1,7 +1,6 @@
 <ion-content class="ion-padding">
   <div class="login-container">
 
-    <!-- Imagen -->
     <div>
       <img src="assets/images/logo.png" alt="Logo" class="logo" />
     </div>
@@ -41,12 +40,17 @@
       }
     </div>
 
-    <!-- Botón -->
     <ion-button [disabled]="loginForm.invalid" type="submit" expand="block" class="login-button" color="success">
       Iniciar sesión
     </ion-button>
 
+
+
   </form>
+
+    <ion-button (click)="goToRegister()" type="button" expand="block"  color="light">
+      Registrarme
+    </ion-button>
 
   </div>
 </ion-content>

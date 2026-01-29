@@ -1,13 +1,35 @@
-<ion-header [translucent]="true">
-  <ion-toolbar>
-    <ion-title>
-      Blank
-    </ion-title>
-  </ion-toolbar>
-</ion-header>
-
-<ion-content [fullscreen]="true">
-  <swiper-container pagination="true" loop="true" slides-per-view="1">
+<ion-menu contentId="main-content">
+  <ion-header>
+    <ion-toolbar>
+      <ion-title>Opciones</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content class="ion-padding">
+    <ion-list>
+      <ion-item  (click)="goToIntro()">
+        <ion-button fill="clear" expand="block">
+          Ver intro
+        </ion-button>
+      </ion-item>
+      <ion-item  (click)="logout()">
+        <ion-button fill="clear" expand="block">
+          Cerrar sesión
+        </ion-button>
+      </ion-item>
+    </ion-list>
+  </ion-content>
+</ion-menu>
+<div class="ion-page" id="main-content">
+  <ion-header>
+    <ion-toolbar>
+      <ion-buttons slot="start">
+        <ion-menu-button></ion-menu-button>
+      </ion-buttons>
+      <ion-title>Bienvenido</ion-title>
+    </ion-toolbar>
+  </ion-header>
+  <ion-content class="ion-padding">
+    <swiper-container pagination="true" loop="true" slides-per-view="1">
     @for(slide of slides; track $index){
       <swiper-slide [class]="theme">
         {{theme }}
@@ -39,5 +61,5 @@
       <h1>No ha visto la intro</h1>
     </ion-text>
   }
-
-</ion-content>
+  </ion-content>
+</div>

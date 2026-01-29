@@ -10,7 +10,6 @@ export const introGuard: CanActivateFn = async (route, state) => {
   if(url == '/intro'){
     return intro ? router.parseUrl('/home') : true;
   }else{
-    console.log("s")
     return intro ? true : router.parseUrl('/intro');
   }
 };

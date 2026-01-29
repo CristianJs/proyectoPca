@@ -23,4 +23,21 @@ constructor(
 
   }
 
+  public register(data: {nombre:string,apellido:string,email:string,password:string}){
+    return new Promise<string>((resolve, reject)=>{
+      const { email,nombre} = data;
+      if(email == 'cristian@gmail.com'){
+        reject(new Error('El correo ya se encuentra registrado'))
+      }else{
+        resolve("Hola "+nombre);
+        this._storageService.set("isLogged", true);
+      }
+    });
+
+  }
+
+  logout(){
+    this._storageService.remove("isLogged");
+  }
+
 }
