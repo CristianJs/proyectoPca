@@ -87,14 +87,13 @@
       <ion-grid>
         <ion-row>
             <ion-col>
-                <ion-icon name="heart"></ion-icon>
+                <ion-icon (click)="saveFavorite()" [name]="setIconFavorite" [ngStyle]="{'color': setIconFavorite == 'heart' ? '#ff0000' : '#ffffff'}"></ion-icon>
             </ion-col>
             <ion-col>
                 <ion-text>{{song.name || "Aun no has seleccionado cancion"}}</ion-text>
             </ion-col>
             <ion-col class="ion-text-end">
               <ion-icon name="home"></ion-icon>
-
                 <ion-icon name="play" (click)="play()" *ngIf="!song.playing"></ion-icon>
                 <ion-icon name="pause" (click)="pause()" *ngIf="song.playing"></ion-icon>
             </ion-col>
@@ -102,46 +101,5 @@
       </ion-grid>
     </ion-footer>
   }
-  <!-- <ion-header>
-    <ion-toolbar>
-      <ion-buttons slot="start">
-        <ion-menu-button></ion-menu-button>
-      </ion-buttons>
-      <ion-title>Bienvenido</ion-title>
-    </ion-toolbar>
-  </ion-header>
-  <ion-content class="ion-padding">
-    <swiper-container pagination="true" loop="true" slides-per-view="1">
-    @for(slide of slides; track $index){
-      <swiper-slide [class]="theme">
-        {{theme }}
-        <div class="slide">
-          <h2>{{ slide.titulo }}</h2>
-          <img [src]="slide.imagen" [alt]="slide.titulo" />
-          <p>{{ slide.descripcion }}</p>
-        </div>
-      </swiper-slide>
-    }
-  </swiper-container>
 
-  <ion-card class="card">
-    <ion-button (click)="setTheme()">
-      Cambiar tema
-    </ion-button>
-  </ion-card>
-    <ion-card class="card">
-    <ion-button (click)="goToIntro()">
-      Volver a ver la intro
-    </ion-button>
-  </ion-card>
-  @if(intro){
-    <ion-text color="primary" >
-      <h1>Ya vio la intro</h1>
-    </ion-text>
-  }@else{
-    <ion-text color="primary" >
-      <h1>No ha visto la intro</h1>
-    </ion-text>
-  }
-  </ion-content> -->
 </div>

@@ -1,6 +1,8 @@
 import { HttpClient, HttpHeaders } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import * as dataArtists from "./artist.json";
+import { StorageService } from './storage.service';
+import { map, pipe } from 'rxjs';
 
 @Injectable({
   providedIn: 'root'
@@ -11,7 +13,8 @@ export class MusicService {
   httpHeaders = { headers: new HttpHeaders({"Content-Type": "application/json"})};
 
   constructor(
-    private readonly http: HttpClient
+    private readonly http: HttpClient,
+    private readonly storageService: StorageService,
   ) { }
 
   getArtistsJson(){
@@ -27,6 +30,27 @@ export class MusicService {
   getArtistTracks(artist_id:number){
     return fetch(`${this.urlServer}/tracks/artist/${artist_id}`).then(
       response => response.json()
+    )
+  }
+
+  async saveFavorite(song:any){
+    const user = await this.storageService.get('userData') || '{}';
+    const body = {
+      "user_id": user.id,
+      "track_id": song.id
+    };
+    return this.http.post(`${this.urlServer}/favorite_tracks`, body, this.httpHeaders);
+  }
+
+
+  async getFavoritos(song:any){
+    const user = await this.storageService.get('userData') || '{}';
+    return this.http.get(`${this.urlServer}/user_favorites/${user.id}`, this.httpHeaders).pipe(
+      map( (res:any) => {
+        console.log(res)
+        console.log(song)
+        return res.some( (fav:any) => fav.id === song.id )
+      })
     )
   }
 

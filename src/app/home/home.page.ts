@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '../core/services/auth.service';
 import { MusicService } from '../core/services/music.service';
 import { SongModalComponent } from '../core/components/song-modal/song-modal.component';
-import { IonicModule, ModalController } from '@ionic/angular';
+import { IonicModule, ModalController,ToastController } from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -41,12 +41,15 @@ export class HomePage implements OnInit{
       "descripcion": "Nuestro equipo está siempre disponible para brindarte soporte y acompañarte en cada paso."
     }
   ]
+  favoritos: any;
+  currentSongIsFavorite: any;
   constructor(
     private readonly _storageService: StorageService,
     private readonly _router: Router,
     private readonly _auth: AuthService,
     private readonly _musicService: MusicService,
-    private readonly _modalController: ModalController
+    private readonly _modalController: ModalController,
+    private readonly toastController: ToastController
   ) {
   }
 
@@ -123,11 +126,10 @@ export class HomePage implements OnInit{
         }
       }
     );
-    modal.onDidDismiss().then((dataReturned:any )=> {
+    modal.onDidDismiss().then(async (dataReturned:any )=> {
       this.song = dataReturned.data;
-      console.log(this.song)
-      this.play()
-
+      await this.isFavorite(this.song);
+      this.play();
     })
     modal.present();
   }
@@ -161,4 +163,33 @@ export class HomePage implements OnInit{
     return null
   }
 
+  async saveFavorite(){
+    (await this._musicService.saveFavorite(this.song)).subscribe({
+      next: (res) => {
+        this.toastController.create({
+          message: 'Canción guardada como favorita',
+          duration: 2000,
+          position:'bottom'
+      }).then(toast => toast.present());
+      },
+      error: (err) => {
+        console.error('Error al guardar la canción favorita', err);
+      }
+    });
+  }
+
+  async isFavorite(song: any){
+     (await this._musicService.getFavoritos(song)).subscribe({
+      next: (res) => {
+      this.currentSongIsFavorite = res;
+      },
+      error: (err) => {
+        console.error('Error al verificar si la canción es favorita', err);
+      }
+    });
+  }
+
+  get setIconFavorite(){
+    return this.currentSongIsFavorite ? 'heart' : 'heart-outline';
+  }
 }
