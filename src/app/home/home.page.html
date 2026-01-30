@@ -1,4 +1,4 @@
-<ion-menu contentId="main-content">
+<ion-menu menuId="mainMenu" contentId="main-content" >
   <ion-header>
     <ion-toolbar>
       <ion-title>Opciones</ion-title>
@@ -36,11 +36,12 @@
   <h1 style="margin-top:50px" >Artistas</h1>
   <swiper-container slides-per-view="3" speed="400">
       <swiper-slide *ngFor="let artstis of artists">
-          <ion-avatar  (click)="showSongs(artists)">
-              <img alt="" src="{{artstis.image}}"/>
-            </ion-avatar>
-            <span style="color: #fff; text-align: center;font-size: 0.8em;">{{artstis.name}}</span>
-      </swiper-slide>
+        <ion-avatar  (click)="showSongs(artists)">
+            <img alt="" src="{{artstis.image}}"/>
+          </ion-avatar>
+            <p style="color: #fff; text-align: center;font-size: 0.8em;">{{artstis.name}}</p>
+            <ion-label ><ion-badge  color="primary">{{artstis.followers}}</ion-badge></ion-label>
+          </swiper-slide>
   </swiper-container>
 
   <h1>Electronica</h1>
@@ -87,7 +88,7 @@
       <ion-grid>
         <ion-row>
             <ion-col>
-                <ion-icon (click)="saveFavorite()" [name]="setIconFavorite" [ngStyle]="{'color': setIconFavorite == 'heart' ? '#ff0000' : '#ffffff'}"></ion-icon>
+                <ion-icon (click)="handleFavorite()" [name]="setIconFavorite" [ngStyle]="{'color': setIconFavorite == 'heart' ? '#ff0000' : '#ffffff'}"></ion-icon>
             </ion-col>
             <ion-col>
                 <ion-text>{{song?.name || "Aun no has seleccionado cancion"}}</ion-text>

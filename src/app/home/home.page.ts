@@ -4,7 +4,7 @@ import { Router } from '@angular/router';
 import { AuthService } from '../core/services/auth.service';
 import { MusicService } from '../core/services/music.service';
 import { SongModalComponent } from '../core/components/song-modal/song-modal.component';
-import { IonicModule, ModalController,ToastController } from '@ionic/angular';
+import { IonicModule, ModalController,ToastController ,MenuController} from '@ionic/angular';
 import { CommonModule } from '@angular/common';
 
 @Component({
@@ -49,7 +49,8 @@ export class HomePage implements OnInit{
     private readonly _auth: AuthService,
     private readonly _musicService: MusicService,
     private readonly _modalController: ModalController,
-    private readonly toastController: ToastController
+    private readonly toastController: ToastController,
+    private menuCtrl: MenuController,
   ) {
   }
 
@@ -97,6 +98,7 @@ export class HomePage implements OnInit{
 
   public logout(){
     this._auth.logout();
+    this.menuCtrl.close('mainMenu');
     this._router.navigateByUrl('/login');
   }
 
@@ -165,6 +167,23 @@ export class HomePage implements OnInit{
     return null
   }
 
+  handleFavorite(){
+    if(this.currentSongIsFavorite){
+      this.removeFavorite();
+    }else{
+      this.saveFavorite();
+    }
+  }
+
+  removeFavorite(){
+    this.currentSongIsFavorite = false;
+    this.toastController.create({
+      message: 'Canción eliminada de favoritas',
+      duration: 2000,
+      position:'bottom'
+  }).then(toast => toast.present());
+  }
+
   async saveFavorite(){
     (await this._musicService.saveFavorite(this.song)).subscribe({
       next: (res) => {
@@ -173,6 +192,7 @@ export class HomePage implements OnInit{
           duration: 2000,
           position:'bottom'
       }).then(toast => toast.present());
+      this.isFavorite(this.song);
       },
       error: (err) => {
         console.error('Error al guardar la canción favorita', err);
@@ -181,7 +201,7 @@ export class HomePage implements OnInit{
   }
 
   async isFavorite(song: any){
-     (await this._musicService.getFavoritos(song)).subscribe({
+    (await this._musicService.getFavoritos(song)).subscribe({
       next: (res) => {
       this.currentSongIsFavorite = res;
       },
