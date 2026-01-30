@@ -40,3 +40,19 @@
 .bg-card{
   background-color: red;
 }
+
+// ion-avatar {
+//     height: 50%;
+//     width: 50%;
+// }
+
+ion-avatar {
+  --border-radius: 4px;
+  height: 100px;
+  width: 100px;
+  margin: 10px;
+}
+
+swiper-container{
+  padding: 5px;
+}

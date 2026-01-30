@@ -6,84 +6,101 @@
     </div>
   <form [formGroup]="registerForm" (ngSubmit)="register(registerForm.value)">
 
-    <!-- Nombre -->
-    <ion-item>
-      <ion-input label="Nombre" labelPlacement="floating" placeholder="Nombre completo" formControlName="nombre"></ion-input>
-    </ion-item>
+  <div formGroupName="user">
 
-    <div class="ion-margin ion-text-center">
-      @for(validation of validation_messages.nombre;track $index){
-        @if(
-        (registerForm.get('nombre')?.hasError(validation.type) &&
-        registerForm.get('nombre')?.dirty)){
-        <div>
-          <ion-text color="danger">{{validation.message}}</ion-text>
-        </div>
-        }
-      }
-    </div>
-
-
-      <!-- Apellido -->
-    <ion-item>
-      <ion-input label="Apellido" labelPlacement="floating" placeholder="Apellido" formControlName="apellido"></ion-input>
-    </ion-item>
+    <!-- Username -->
+      <ion-item>
+        <ion-input label="Nombre de usuario" labelPlacement="floating" placeholder="Nombre de usuario" formControlName="username"></ion-input>
+      </ion-item>
 
       <div class="ion-margin ion-text-center">
-      @for(validation of validation_messages.apellido;track $index){
-        @if(
-        (registerForm.get('apellido')?.hasError(validation.type) &&
-        registerForm.get('apellido')?.dirty)){
-        <div>
-          <ion-text color="danger">{{validation.message}}</ion-text>
-        </div>
+        @for(validation of validation_messages.username;track $index){
+          @if(
+          (registerForm.get('user')?.get('username')?.hasError(validation.type) &&
+          registerForm.get('user')?.get('username')?.dirty)){
+          <div>
+            <ion-text color="danger">{{validation.message}}</ion-text>
+          </div>
+          }
         }
-      }
+      </div>
+      <!-- Nombre -->
+      <ion-item>
+        <ion-input label="Nombre" labelPlacement="floating" placeholder="Nombre completo" formControlName="name"></ion-input>
+      </ion-item>
+
+      <div class="ion-margin ion-text-center">
+        @for(validation of validation_messages.name;track $index){
+          @if(
+          (registerForm.get('user')?.get('name')?.hasError(validation.type) &&
+          registerForm.get('user')?.get('name')?.dirty)){
+          <div>
+            <ion-text color="danger">{{validation.message}}</ion-text>
+          </div>
+          }
+        }
       </div>
 
-    <!-- Email -->
-    <ion-item>
-      <ion-input label="Email" labelPlacement="floating" placeholder="Correo electronico" formControlName="email"></ion-input>
-    </ion-item>
 
+        <!-- Apellido -->
+      <ion-item>
+        <ion-input label="Apellido" labelPlacement="floating" placeholder="Apellido" formControlName="last_name"></ion-input>
+      </ion-item>
 
-    <div class="ion-margin ion-text-center">
-      @for(validation of validation_messages.email;track $index){
-        @if(
-        (registerForm.get('email')?.hasError(validation.type) &&
-        registerForm.get('email')?.dirty)){
-        <div>
-          <ion-text color="danger">{{validation.message}}</ion-text>
-        </div>
+        <div class="ion-margin ion-text-center">
+        @for(validation of validation_messages.last_name;track $index){
+          @if(
+          (registerForm.get('user')?.get('last_name')?.hasError(validation.type) &&
+          registerForm.get('user')?.get('last_name')?.dirty)){
+          <div>
+            <ion-text color="danger">{{validation.message}}</ion-text>
+          </div>
+          }
         }
-      }
-    </div>
-
-    <!-- Password -->
-    <ion-item>
-      <ion-input label="Contraseña" type="password" labelPlacement="floating" placeholder="Ingresar contraseña" formControlName="password"></ion-input>
-    </ion-item>
-
-    <div class="ion-margin ion-text-center">
-      @for(validation of validation_messages.password;track $index){
-        @if(
-        (registerForm.get('password')?.hasError(validation.type) &&
-        registerForm.get('password')?.dirty)){
-        <div>
-          <ion-text color="danger">{{validation.message}}</ion-text>
         </div>
+
+      <!-- Email -->
+      <ion-item>
+        <ion-input label="Email" labelPlacement="floating" placeholder="Correo electronico" formControlName="email"></ion-input>
+      </ion-item>
+
+
+      <div class="ion-margin ion-text-center">
+        @for(validation of validation_messages.email;track $index){
+          @if(
+          (registerForm.get('user')?.get('email')?.hasError(validation.type) &&
+          registerForm.get('user')?.get('email')?.dirty)){
+          <div>
+            <ion-text color="danger">{{validation.message}}</ion-text>
+          </div>
+          }
         }
-      }
-    </div>
+      </div>
+
+      <!-- Password -->
+      <ion-item>
+        <ion-input label="Contraseña" type="password" labelPlacement="floating" placeholder="Ingresar contraseña" formControlName="password"></ion-input>
+      </ion-item>
+
+      <div class="ion-margin ion-text-center">
+        @for(validation of validation_messages.password;track $index){
+          @if(
+          (registerForm.get('user')?.get('password')?.hasError(validation.type) &&
+          registerForm.get('user')?.get('password')?.dirty)){
+          <div>
+            <ion-text color="danger">{{validation.message}}</ion-text>
+          </div>
+          }
+        }
+      </div>
 
     <ion-button [disabled]="registerForm.invalid" type="submit" expand="block"color="success">
-      Finalizar
+      Crear
     </ion-button>
 
-
+    </div>
 
   </form>
-
 
     <ion-button (click)="goToLogin()" type="button" expand="block"  color="light">
       Ir al login

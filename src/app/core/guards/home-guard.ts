@@ -1,5 +1,5 @@
 import { inject } from '@angular/core';
-import { CanActivateFn, Router } from '@angular/router';
+import { ActivatedRoute, CanActivateFn, Router } from '@angular/router';
 import { StorageService } from '../services/storage.service';
 
 export const homeGuard: CanActivateFn = async (route, state) => {

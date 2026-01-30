@@ -19,8 +19,90 @@
     </ion-list>
   </ion-content>
 </ion-menu>
+
+<ion-header>
+  <ion-toolbar>
+    <ion-buttons slot="start">
+      <ion-menu-button></ion-menu-button>
+    </ion-buttons>
+    <ion-title>Bienvenido</ion-title>
+  </ion-toolbar>
+</ion-header>
+
 <div class="ion-page" id="main-content">
-  <ion-header>
+
+  <ion-content class="ion-padding ">
+
+  <h1 style="margin-top:50px" >Artistas</h1>
+  <swiper-container slides-per-view="3" speed="400">
+      <swiper-slide *ngFor="let artstis of artists">
+          <ion-avatar  (click)="showSongs(artists)">
+              <img alt="" src="{{artstis.image}}"/>
+            </ion-avatar>
+            <span style="color: #fff; text-align: center;font-size: 0.8em;">{{artstis.name}}</span>
+      </swiper-slide>
+  </swiper-container>
+
+  <h1>Electronica</h1>
+  <swiper-container slides-per-view="3" speed="400">
+      <swiper-slide *ngFor="let artstis of songElectronica">
+          <ion-avatar  (click)="showSongs(artstis)">
+              <img alt="" src="{{artstis.image}}"/>
+            </ion-avatar>
+            <span style="color: #fff; text-align: center;font-size: 0.8em;">{{artstis.name}}</span>
+      </swiper-slide>
+  </swiper-container>
+
+  <h1>Regueeaton</h1>
+  <swiper-container slides-per-view="3" speed="400">
+      <swiper-slide *ngFor="let artstis of songRegueaton">
+          <ion-avatar  (click)="showSongs(artstis)">
+              <img alt="" src="{{artstis.image}}"/>
+            </ion-avatar>
+            <span style="color: #fff; text-align: center;font-size: 0.8em;">{{artstis.name}}</span>
+      </swiper-slide>
+  </swiper-container>
+
+  <h1>Vallenato</h1>
+  <swiper-container slides-per-view="3" speed="400">
+      <swiper-slide *ngFor="let artstis of songVallenato">
+          <ion-avatar  (click)="showSongs(artstis)">
+              <img alt="" src="{{artstis.image}}"/>
+            </ion-avatar>
+            <span style="color: #fff; text-align: center;font-size: 0.8em;">{{artstis.name}}</span>
+      </swiper-slide>
+  </swiper-container>
+
+
+  </ion-content>
+  @if(currentSong){
+    <ion-footer>
+      <ion-grid>
+        <ion-row>
+            <ion-col class="ion-text-start">{{ parseTime(currentSong.currentTime) || "0:00"}}</ion-col>
+            <ion-col class="ion-text-end">{{ parseTime(currentSong.duration) || "0:00"}}</ion-col>
+        </ion-row>
+      </ion-grid>
+      <ion-progress-bar [value]="newTime || 0"></ion-progress-bar>
+      <ion-grid>
+        <ion-row>
+            <ion-col>
+                <ion-icon name="heart"></ion-icon>
+            </ion-col>
+            <ion-col>
+                <ion-text>{{song.name || "Aun no has seleccionado cancion"}}</ion-text>
+            </ion-col>
+            <ion-col class="ion-text-end">
+              <ion-icon name="home"></ion-icon>
+
+                <ion-icon name="play" (click)="play()" *ngIf="!song.playing"></ion-icon>
+                <ion-icon name="pause" (click)="pause()" *ngIf="song.playing"></ion-icon>
+            </ion-col>
+        </ion-row>
+      </ion-grid>
+    </ion-footer>
+  }
+  <!-- <ion-header>
     <ion-toolbar>
       <ion-buttons slot="start">
         <ion-menu-button></ion-menu-button>
@@ -61,5 +143,5 @@
       <h1>No ha visto la intro</h1>
     </ion-text>
   }
-  </ion-content>
+  </ion-content> -->
 </div>

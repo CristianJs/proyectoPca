@@ -5,7 +5,7 @@ import { IonContent, IonHeader, IonTitle, IonToolbar, IonItem, IonLabel, IonInpu
 import { StorageService } from '../core/services/storage.service';
 import { AlertController, NavController } from '@ionic/angular';
 import { AuthService } from '../core/services/auth.service';
-import { Router } from '@angular/router';
+import { ActivatedRoute, Router } from '@angular/router';
 
 
 @Component({
@@ -38,7 +38,6 @@ export class LoginPage {
     password: [
       { type: "required", message: "La contraseña es obligatoria" },
       { type: "minlength", message: "La contraseña debe contener minimo 6 caracteres" },
-      { type: "maxlength", message: "La contraseña debe contener maximo 10 caracteres" }
     ]
   }
   constructor(
@@ -47,26 +46,33 @@ export class LoginPage {
     private readonly alertController: AlertController,
     private readonly _authService: AuthService,
     private readonly _navCtrl: NavController,
-    private readonly _router: Router
+    private readonly _router: Router,
+
   ) {
     this.createForm();
   }
 
   private createForm(){
     this.loginForm = this.formBuilder.group({
-      email: new FormControl("",Validators.compose([Validators.required,Validators.pattern("^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$")])),
-      password: new FormControl("",Validators.compose([Validators.required,Validators.minLength(6),Validators.maxLength(10)]))
+      user:new FormGroup({
+        email: new FormControl("",Validators.compose([Validators.required,Validators.pattern("^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$")])),
+        password: new FormControl("",Validators.compose([Validators.required,Validators.minLength(6)]))
+      }),
     })
   }
 
-  async loginUser(dataLogin: any) {
-    try {
-      const loginMssg = await this._authService.login(dataLogin);
-      this._navCtrl.navigateForward("/home");
-      this.presentAlert("Bienvenido",loginMssg);
-    } catch (error: any) {
-      this.presentAlert("Ha ocurrido un error",error.message);
-    }
+  public loginUser(dataLogin: any) {
+    this._authService.login(dataLogin).subscribe({
+      next: (res)=>{
+        this.storage.set("isLogged", true);
+        this.storage.set("userData", res.user);
+        this._navCtrl.navigateRoot('/home');
+        this.presentAlert('Login Exitoso', 'Bienvenido ' + res.msg);
+      },
+      error: (err)=>{
+        this.presentAlert('Error', 'Credenciales invalidas: ' + err.error.errors["email or password"][0]);
+      }
+    })
   }
 
   async presentAlert(header: string,message: string) {

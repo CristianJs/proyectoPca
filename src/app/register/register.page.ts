@@ -24,7 +24,7 @@ import { NavController, AlertController } from '@ionic/angular';
     IonText
   ]
 })
-export class RegisterPage implements OnInit {
+export class RegisterPage  {
 
   registerForm: FormGroup = new FormGroup({});
 
@@ -38,13 +38,17 @@ export class RegisterPage implements OnInit {
       { type: "minlength", message: "La contraseña debe contener minimo 6 caracteres" },
       { type: "maxlength", message: "La contraseña debe contener maximo 10 caracteres" }
     ],
-    nombre: [
+    name: [
       { type: "required", message: "El nombre es obligatorio" },
       { type: "minlength", message: "El nombre debe contener minimo 3 caracteres" }
     ],
-    apellido: [
+    last_name: [
       { type: "required", message: "El apellido es obligatorio" },
       { type: "minlength", message: "El apellido debe contener minimo 3 caracteres" }
+    ],
+    username: [
+      { type: "required", message: "El nombre de usuario es obligatorio" },
+      { type: "minlength", message: "El nombre de usuario debe contener minimo 3 caracteres" }
     ]
   }
 
@@ -59,16 +63,17 @@ export class RegisterPage implements OnInit {
     this.createForm();
   }
 
-  ngOnInit() {
-  }
-
 
   private createForm(){
     this.registerForm = this.formBuilder.group({
-      nombre: new FormControl("",Validators.compose([Validators.required,Validators.minLength(3)])),
-      apellido: new FormControl("",Validators.compose([Validators.required,Validators.minLength(3)])),
-      email: new FormControl("",Validators.compose([Validators.required,Validators.pattern("^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$")])),
-      password: new FormControl("",Validators.compose([Validators.required,Validators.minLength(6),Validators.maxLength(10)]))
+      user:new FormGroup({
+        username:  new FormControl("",Validators.compose([Validators.required,Validators.minLength(3)])),
+        name:  new FormControl("",Validators.compose([Validators.required,Validators.minLength(3)])),
+        last_name: new FormControl("",Validators.compose([Validators.required,Validators.minLength(3)])),
+        email: new FormControl("",Validators.compose([Validators.required,Validators.pattern("^[a-zA-Z0-9_.+-]+@[a-zA-Z0-9-]+.[a-zA-Z0-9-.]+$")])),
+        password: new FormControl("",Validators.compose([Validators.required,Validators.minLength(6),Validators.maxLength(10)]))
+      })
+
     })
   }
 
@@ -77,13 +82,16 @@ export class RegisterPage implements OnInit {
   }
 
   async register(data: any){
-     try {
-      const loginMssg = await this._authService.register(data);
-      this._navCtrl.navigateForward("/home");
-      this.presentAlert("Bienvenido",loginMssg);
-    } catch (error: any) {
-      this.presentAlert("Ha ocurrido un error",error.message);
-    }
+     this._authService.register(data).subscribe({
+      next: (res)=>{
+        this.presentAlert('Registro Exitoso', 'Bienvenido ' + data.user.name);
+        this.storage.set("isLogged", true);
+        this._navCtrl.navigateRoot('/home');
+      },
+      error: (err)=>{
+        this.presentAlert('Error', 'Credenciales invalidas: ' + err.error.errors);
+      }
+    })
   }
 
   async presentAlert(header: string,message: string) {

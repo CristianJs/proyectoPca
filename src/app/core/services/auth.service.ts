@@ -20,21 +20,13 @@ constructor(
     return this.http.post<any>(this.urlServer+"/login", data, this.httpHeaders);
   }
 
-  public register(data: {nombre:string,apellido:string,email:string,password:string}){
-    return new Promise<string>((resolve, reject)=>{
-      const { email,nombre} = data;
-      if(email == 'cristian@gmail.com'){
-        reject(new Error('El correo ya se encuentra registrado'))
-      }else{
-        resolve("Hola "+nombre);
-        this._storageService.set("isLogged", true);
-      }
-    });
-
+  public register(data: {nombre:string, apellido: string, email:string, password:string}){
+    return this.http.post<any>(this.urlServer+"/signup", data, this.httpHeaders);
   }
 
   logout(){
     this._storageService.remove("isLogged");
+    this._storageService.remove("userData");
   }
 
 }
