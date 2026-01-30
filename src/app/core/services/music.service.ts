@@ -47,8 +47,6 @@ export class MusicService {
     const user = await this.storageService.get('userData') || '{}';
     return this.http.get(`${this.urlServer}/user_favorites/${user.id}`, this.httpHeaders).pipe(
       map( (res:any) => {
-        console.log(res)
-        console.log(song)
         return res.some( (fav:any) => fav.id === song.id )
       })
     )

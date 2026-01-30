@@ -90,12 +90,12 @@
                 <ion-icon (click)="saveFavorite()" [name]="setIconFavorite" [ngStyle]="{'color': setIconFavorite == 'heart' ? '#ff0000' : '#ffffff'}"></ion-icon>
             </ion-col>
             <ion-col>
-                <ion-text>{{song.name || "Aun no has seleccionado cancion"}}</ion-text>
+                <ion-text>{{song?.name || "Aun no has seleccionado cancion"}}</ion-text>
             </ion-col>
             <ion-col class="ion-text-end">
               <ion-icon name="home"></ion-icon>
-                <ion-icon name="play" (click)="play()" *ngIf="!song.playing"></ion-icon>
-                <ion-icon name="pause" (click)="pause()" *ngIf="song.playing"></ion-icon>
+                <ion-icon name="play" (click)="play()" *ngIf="!song?.playing"></ion-icon>
+                <ion-icon name="pause" (click)="pause()" *ngIf="song?.playing"></ion-icon>
             </ion-col>
         </ion-row>
       </ion-grid>

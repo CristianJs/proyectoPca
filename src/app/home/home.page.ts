@@ -127,15 +127,17 @@ export class HomePage implements OnInit{
       }
     );
     modal.onDidDismiss().then(async (dataReturned:any )=> {
-      this.song = dataReturned.data;
-      await this.isFavorite(this.song);
-      this.play();
+      if(dataReturned.data){
+        this.song = dataReturned.data;
+        await this.isFavorite(this.song);
+        this.play();
+      }
     })
     modal.present();
   }
 
   play(){
-    this.currentSong = new Audio(this.song.preview_url);
+    this.currentSong = new Audio(this.song?.preview_url);
     this.currentSong.play();
     this.currentSong.addEventListener("timeupdate", ()=>{
       this.newTime = (1 / this.currentSong.duration) * this.currentSong.currentTime;
