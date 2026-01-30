@@ -5,46 +5,47 @@
       <img src="assets/images/logo.png" alt="Logo" class="logo" />
     </div>
   <form [formGroup]="loginForm" (ngSubmit)="loginUser(loginForm.value)">
-    <!-- Email -->
-    <ion-item>
-      <ion-input label="Email" labelPlacement="floating" placeholder="Correo electronico" formControlName="email"></ion-input>
-    </ion-item>
+
+    <div formGroupName="user">
+      <!-- Email -->
+      <ion-item>
+        <ion-input label="Email" labelPlacement="floating" placeholder="Correo electronico" formControlName="email"></ion-input>
+      </ion-item>
 
 
-    <div class="ion-margin ion-text-center">
-      @for(validation of validation_messages.email;track $index){
-        @if(
-        (loginForm.get('email')?.hasError(validation.type) &&
-        loginForm.get('email')?.dirty)){
-        <div>
-          <ion-text color="danger">{{validation.message}}</ion-text>
-        </div>
+      <div class="ion-margin ion-text-center">
+        @for(validation of validation_messages.email;track $index){
+          @if(
+          (loginForm.get('email')?.hasError(validation.type) &&
+          loginForm.get('email')?.dirty)){
+          <div>
+            <ion-text color="danger">{{validation.message}}</ion-text>
+          </div>
+          }
         }
-      }
-    </div>
+      </div>
 
-    <!-- Password -->
-    <ion-item>
-      <ion-input [type]="typeInput" label="Contraseña" labelPlacement="floating" placeholder="Ingresar contraseña" formControlName="password"></ion-input>
-    </ion-item>
+      <!-- Password -->
+      <ion-item>
+        <ion-input [type]="typeInput" label="Contraseña" labelPlacement="floating" placeholder="Ingresar contraseña" formControlName="password"></ion-input>
+      </ion-item>
 
-    <div class="ion-margin ion-text-center">
-      @for(validation of validation_messages.password;track $index){
-        @if(
-        (loginForm.get('password')?.hasError(validation.type) &&
-        loginForm.get('password')?.dirty)){
-        <div>
-          <ion-text color="danger">{{validation.message}}</ion-text>
-        </div>
+      <div class="ion-margin ion-text-center">
+        @for(validation of validation_messages.password;track $index){
+          @if(
+          (loginForm.get('password')?.hasError(validation.type) &&
+          loginForm.get('password')?.dirty)){
+          <div>
+            <ion-text color="danger">{{validation.message}}</ion-text>
+          </div>
+          }
         }
-      }
+      </div>
+
+      <ion-button [disabled]="loginForm.invalid" type="submit" expand="block" class="login-button" color="success">
+        Iniciar sesión
+      </ion-button>
     </div>
-
-    <ion-button [disabled]="loginForm.invalid" type="submit" expand="block" class="login-button" color="success">
-      Iniciar sesión
-    </ion-button>
-
-
 
   </form>
 
