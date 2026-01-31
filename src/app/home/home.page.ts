@@ -46,13 +46,10 @@ export class HomePage implements OnInit{
   currentSongIsFavorite: any;
   constructor(
     private readonly _storageService: StorageService,
-    private readonly _router: Router,
-    private readonly _auth: AuthService,
     private readonly _musicService: MusicService,
     private readonly _modalController: ModalController,
     private readonly toastController: ToastController,
-    private menuCtrl: MenuController,
-    private themeService: ThemeService
+    private readonly themeService: ThemeService
   ) {
   }
 
@@ -92,21 +89,9 @@ export class HomePage implements OnInit{
     }
   }
 
-  public async goToIntro(){
-    await this._storageService.remove('intro') ;
-    this._router.navigateByUrl('/intro');
-  }
-
   public async getIntro(){
     this.intro = await this._storageService.get('intro') ;
   }
-
-  public logout(){
-    this._auth.logout();
-    this.menuCtrl.close('mainMenu');
-    this._router.navigateByUrl('/login');
-  }
-
 
   artistsJson: any;
   artists: any;

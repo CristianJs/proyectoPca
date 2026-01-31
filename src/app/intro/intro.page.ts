@@ -49,7 +49,7 @@ export class IntroPage{
 
   async goHome(){
     await this._storageService.set('intro',"true");
-    this._router.navigateByUrl('/home');
+    this._router.navigateByUrl('/menu/home');
   }
 
 }

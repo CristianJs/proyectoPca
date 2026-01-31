@@ -84,9 +84,8 @@ export class RegisterPage  {
   async register(data: any){
      this._authService.register(data).subscribe({
       next: (res)=>{
-        this.presentAlert('Registro Exitoso', 'Bienvenido ' + data.user.name);
-        this.storage.set("isLogged", true);
-        this._navCtrl.navigateRoot('/home');
+        this.presentAlert('Registro Exitoso', 'Usuario registrado: ' + data.user.name);
+        this._navCtrl.navigateRoot('/login');
       },
       error: (err)=>{
         this.presentAlert('Error', 'Credenciales invalidas: ' + err.error.errors);

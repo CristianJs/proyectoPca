@@ -66,8 +66,8 @@ export class LoginPage {
       next: (res)=>{
         this.storage.set("isLogged", true);
         this.storage.set("userData", res.user);
-        this._navCtrl.navigateRoot('/home');
-        this.presentAlert('Login Exitoso', 'Bienvenido ' + res.msg);
+        this._navCtrl.navigateRoot('/menu/home');
+        this.presentAlert('Login Exitoso',  res.msg);
       },
       error: (err)=>{
         this.presentAlert('Error', 'Credenciales invalidas: ' + err.error.errors["email or password"][0]);
