@@ -26,6 +26,10 @@
       <ion-menu-button></ion-menu-button>
     </ion-buttons>
     <ion-title>Bienvenido</ion-title>
+    <ion-buttons slot="end">
+      <ion-icon *ngIf="theme == 'theme-dark'" (click)="setLight()" name="contrast"></ion-icon>
+      <ion-icon *ngIf="theme == 'theme-light'" (click)="setDark()" name="contrast"></ion-icon>
+    </ion-buttons>
   </ion-toolbar>
 </ion-header>
 
@@ -34,13 +38,18 @@
   <ion-content class="ion-padding ">
 
   <h1 style="margin-top:50px" >Artistas</h1>
-  <swiper-container slides-per-view="3" speed="400">
+  <swiper-container slides-per-view="3" speed="500">
       <swiper-slide *ngFor="let artstis of artists">
-        <ion-avatar  (click)="showSongs(artists)">
+        <ion-avatar  (click)="showSongs(artstis)">
             <img alt="" src="{{artstis.image}}"/>
-          </ion-avatar>
-            <p style="color: #fff; text-align: center;font-size: 0.8em;">{{artstis.name}}</p>
-            <ion-label ><ion-badge  color="primary">{{artstis.followers}}</ion-badge></ion-label>
+            <ion-badge style="position:absolute; top: 0px; right:  0px;" color="success"><ion-icon name="people"></ion-icon> {{artstis.followers}}</ion-badge>
+        </ion-avatar>
+            <p style=" text-align: center;font-size: 0.8em;">{{artstis.name}}</p>
+            <div>
+            @for (item of artstis.genres; track $index) {
+              <ion-badge style="margin:0px 2px;font-size: 0.6em;background-color: #428b62;" ><ion-icon name="musical-notes"></ion-icon> {{item}}</ion-badge>
+            }
+            </div>
           </swiper-slide>
   </swiper-container>
 
@@ -50,7 +59,7 @@
           <ion-avatar  (click)="showSongs(artstis)">
               <img alt="" src="{{artstis.image}}"/>
             </ion-avatar>
-            <span style="color: #fff; text-align: center;font-size: 0.8em;">{{artstis.name}}</span>
+            <span style=" text-align: center;font-size: 0.8em;">{{artstis.name}}</span>
       </swiper-slide>
   </swiper-container>
 
@@ -60,7 +69,7 @@
           <ion-avatar  (click)="showSongs(artstis)">
               <img alt="" src="{{artstis.image}}"/>
             </ion-avatar>
-            <span style="color: #fff; text-align: center;font-size: 0.8em;">{{artstis.name}}</span>
+            <span style=" text-align: center;font-size: 0.8em;">{{artstis.name}}</span>
       </swiper-slide>
   </swiper-container>
 
@@ -70,7 +79,7 @@
           <ion-avatar  (click)="showSongs(artstis)">
               <img alt="" src="{{artstis.image}}"/>
             </ion-avatar>
-            <span style="color: #fff; text-align: center;font-size: 0.8em;">{{artstis.name}}</span>
+            <span style=" text-align: center;font-size: 0.8em;">{{artstis.name}}</span>
       </swiper-slide>
   </swiper-container>
 

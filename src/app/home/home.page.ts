@@ -6,6 +6,7 @@ import { MusicService } from '../core/services/music.service';
 import { SongModalComponent } from '../core/components/song-modal/song-modal.component';
 import { IonicModule, ModalController,ToastController ,MenuController} from '@ionic/angular';
 import { CommonModule } from '@angular/common';
+import { ThemeService } from '../core/services/Theme.service';
 
 @Component({
   selector: 'app-home',
@@ -16,8 +17,8 @@ import { CommonModule } from '@angular/common';
 })
 export class HomePage implements OnInit{
 
-  public colorClaro = 'card-claro'
-  public colorOscuro = 'card-oscuro'
+  public colorClaro = 'theme-light'
+  public colorOscuro = 'theme-dark'
   public theme = '';
   public intro : boolean = false;
 
@@ -51,6 +52,7 @@ export class HomePage implements OnInit{
     private readonly _modalController: ModalController,
     private readonly toastController: ToastController,
     private menuCtrl: MenuController,
+    private themeService: ThemeService
   ) {
   }
 
@@ -85,6 +87,9 @@ export class HomePage implements OnInit{
 
   async getCurrentTheme(){
     this.theme = await this._storageService.get('theme') ;
+    if(!this.theme){
+      this.setTheme()
+    }
   }
 
   public async goToIntro(){
@@ -133,6 +138,8 @@ export class HomePage implements OnInit{
         this.song = dataReturned.data;
         await this.isFavorite(this.song);
         this.play();
+        this.currentSong.pause();
+        this.song.playing = false;
       }
     })
     modal.present();
@@ -175,13 +182,21 @@ export class HomePage implements OnInit{
     }
   }
 
-  removeFavorite(){
-    this.currentSongIsFavorite = false;
-    this.toastController.create({
-      message: 'Canción eliminada de favoritas',
-      duration: 2000,
-      position:'bottom'
-  }).then(toast => toast.present());
+  async removeFavorite(){
+    (await this._musicService.removeFavorite(this.song)).subscribe({
+      next: (res) => {
+        this.currentSongIsFavorite = false;
+        this.toastController.create({
+          message: 'Canción eliminada de favoritas',
+          duration: 2000,
+          position:'bottom'
+      }).then(toast => toast.present());
+      this.isFavorite(this.song);
+      },
+      error: (err) => {
+        console.error('Error al guardar la canción favorita', err);
+      }
+    });
   }
 
   async saveFavorite(){
@@ -214,4 +229,15 @@ export class HomePage implements OnInit{
   get setIconFavorite(){
     return this.currentSongIsFavorite ? 'heart' : 'heart-outline';
   }
+
+  setLight() {
+    this.themeService.setTheme('theme-light');
+    this.theme = 'theme-light';
+  }
+
+  setDark() {
+    this.themeService.setTheme('theme-dark');
+    this.theme = 'theme-dark';
+  }
+
 }

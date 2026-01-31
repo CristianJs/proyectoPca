@@ -42,14 +42,13 @@ export class MusicService {
     return this.http.post(`${this.urlServer}/favorite_tracks`, body, this.httpHeaders);
   }
 
-  //TODO: IMPLEMENTAR SERVICIO PARA ELIMINAR FAVORITO
   async removeFavorite(song:any){
     const user = await this.storageService.get('userData') || '{}';
     const body = {
       "user_id": user.id,
       "track_id": song.id
     };
-    return this.http.post(`${this.urlServer}/favorite_tracks`, body, this.httpHeaders);
+    return this.http.delete(`${this.urlServer}/remove_favorite`, {body, headers: this.httpHeaders.headers});
   }
 
 
